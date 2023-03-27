@@ -16,6 +16,7 @@ namespace proiect_securitate
         {
             InitializeComponent();
             //Prelucrat de maxim
+            //Comentat de Iulia_E
         }
     }
 }
