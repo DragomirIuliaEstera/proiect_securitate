@@ -15,6 +15,7 @@ namespace proiect_securitate
         public Form1()
         {
             InitializeComponent();
+            //Prelucrat de maxim
         }
     }
 }
