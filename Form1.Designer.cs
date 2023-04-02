@@ -28,22 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.text_to_encrypt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.combo_box_cipher_chosen = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textCriptat = new System.Windows.Forms.Label();
             this.textDecryptat = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.Text_cheie = new System.Windows.Forms.Label();
+            this.text_box_key = new System.Windows.Forms.TextBox();
+            this.button_cipher = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // text_to_encrypt
             // 
-            this.textBox1.Location = new System.Drawing.Point(254, 6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
+            this.text_to_encrypt.Location = new System.Drawing.Point(254, 6);
+            this.text_to_encrypt.Name = "text_to_encrypt";
+            this.text_to_encrypt.Size = new System.Drawing.Size(270, 20);
+            this.text_to_encrypt.TabIndex = 0;
             // 
             // label1
             // 
@@ -63,21 +66,21 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Alege un cipher pentru criptare si decriptare";
             // 
-            // comboBox1
+            // combo_box_cipher_chosen
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.combo_box_cipher_chosen.FormattingEnabled = true;
+            this.combo_box_cipher_chosen.Items.AddRange(new object[] {
             "Cezar",
             "Vigenere"});
-            this.comboBox1.Location = new System.Drawing.Point(254, 38);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 3;
+            this.combo_box_cipher_chosen.Location = new System.Drawing.Point(254, 38);
+            this.combo_box_cipher_chosen.Name = "combo_box_cipher_chosen";
+            this.combo_box_cipher_chosen.Size = new System.Drawing.Size(121, 21);
+            this.combo_box_cipher_chosen.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 70);
+            this.label3.Location = new System.Drawing.Point(12, 174);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 4;
@@ -86,7 +89,7 @@
             // textCriptat
             // 
             this.textCriptat.AutoSize = true;
-            this.textCriptat.Location = new System.Drawing.Point(91, 70);
+            this.textCriptat.Location = new System.Drawing.Point(88, 174);
             this.textCriptat.Name = "textCriptat";
             this.textCriptat.Size = new System.Drawing.Size(10, 13);
             this.textCriptat.TabIndex = 5;
@@ -95,7 +98,7 @@
             // textDecryptat
             // 
             this.textDecryptat.AutoSize = true;
-            this.textDecryptat.Location = new System.Drawing.Point(91, 95);
+            this.textDecryptat.Location = new System.Drawing.Point(88, 199);
             this.textDecryptat.Name = "textDecryptat";
             this.textDecryptat.Size = new System.Drawing.Size(10, 13);
             this.textDecryptat.TabIndex = 7;
@@ -104,25 +107,54 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 95);
+            this.label6.Location = new System.Drawing.Point(12, 199);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 13);
             this.label6.TabIndex = 6;
             this.label6.Text = "Text decryptat";
+            // 
+            // Text_cheie
+            // 
+            this.Text_cheie.AutoSize = true;
+            this.Text_cheie.Location = new System.Drawing.Point(12, 69);
+            this.Text_cheie.Name = "Text_cheie";
+            this.Text_cheie.Size = new System.Drawing.Size(125, 13);
+            this.Text_cheie.TabIndex = 8;
+            this.Text_cheie.Text = "Introdu cheia de criptare:";
+            // 
+            // text_box_key
+            // 
+            this.text_box_key.Location = new System.Drawing.Point(147, 69);
+            this.text_box_key.Name = "text_box_key";
+            this.text_box_key.Size = new System.Drawing.Size(100, 20);
+            this.text_box_key.TabIndex = 9;
+            // 
+            // button_cipher
+            // 
+            this.button_cipher.Location = new System.Drawing.Point(15, 104);
+            this.button_cipher.Name = "button_cipher";
+            this.button_cipher.Size = new System.Drawing.Size(75, 47);
+            this.button_cipher.TabIndex = 10;
+            this.button_cipher.Text = "Foloseste cipher";
+            this.button_cipher.UseVisualStyleBackColor = true;
+            this.button_cipher.Click += new System.EventHandler(this.button_cipher_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_cipher);
+            this.Controls.Add(this.text_box_key);
+            this.Controls.Add(this.Text_cheie);
             this.Controls.Add(this.textDecryptat);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textCriptat);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.combo_box_cipher_chosen);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.text_to_encrypt);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -132,14 +164,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox text_to_encrypt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox combo_box_cipher_chosen;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label textCriptat;
         private System.Windows.Forms.Label textDecryptat;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label Text_cheie;
+        private System.Windows.Forms.TextBox text_box_key;
+        private System.Windows.Forms.Button button_cipher;
     }
 }
 
