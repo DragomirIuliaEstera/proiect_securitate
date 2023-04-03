@@ -20,8 +20,38 @@ namespace proiect_securitate
             label6.Visible = false;
             textDecryptat.Visible = false;
             textCriptat.Visible = false;
-            //Prelucrat de maxim
-            //Comentat de Iulia_E
+        }
+
+        public string Cezar_encrypt(string plaintext, int shift_key)
+        {
+            string message = plaintext;
+            int requiredShift = shift_key;
+
+            byte[] ascii = Encoding.ASCII.GetBytes(message);
+            List<int> buffer = new List<int>();
+            for (int i = 0; i < ascii.Length; ++i)
+            {
+                if (char.IsUpper((char)ascii[i]))
+                {
+                    int x = Convert.ToInt32(ascii[i]);
+                    buffer.Add((x - 65 + requiredShift) % 26);
+                }
+                else
+                {
+                    int x = Convert.ToInt32(ascii[i]);
+                    buffer.Add((x - 97 + requiredShift) % 26);
+                }
+            }
+            string encryptedMessage = "";
+            for (int i = 0; i < ascii.Length; ++i)
+            {
+                if (char.IsUpper((char)ascii[i]))
+                    encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 65);
+                else
+                    encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 97);
+            }
+
+            return encryptedMessage;
         }
 
         public string Cezar_decrypt(string crypetd_text,int shift_key)
@@ -103,9 +133,14 @@ namespace proiect_securitate
 
             if(combo_box_cipher_chosen.Text.Equals("Cezar") && text_box_key.Text.ToString() != "" && text_to_encrypt.Text.ToString() != "")
             {
-                int shift_key = Int32.Parse(text_box_key.Text.ToString());
-                string input = text_to_encrypt.Text.ToString();
-                textDecryptat.Text = Cezar_decrypt(input,shift_key);
+                try
+                {
+                    int shift_key = Int32.Parse(text_box_key.Text.ToString());
+                    string input = text_to_encrypt.Text.ToString();
+                    textCriptat.Text = Cezar_encrypt(input, shift_key);
+                    textDecryptat.Text = Cezar_decrypt(textCriptat.Text, shift_key);
+                }
+                catch(Exception ex) { textCriptat.Text = "Cheia trebuie sa fie un numar"; }
             }
             else 
                 if(combo_box_cipher_chosen.Text.Equals("Vigenere") && text_box_key.Text.ToString() != "" && text_to_encrypt.Text.ToString() != "")
@@ -113,7 +148,8 @@ namespace proiect_securitate
                     string input= text_to_encrypt.Text.ToString();
                     string key = text_box_key.Text.ToString().ToLower();
                     textCriptat.Text = Vigenere_encryption(input,key);
-                }
+                    //textDecryptat.Text = Cezar_decrypt(textCriptat.Text,shift_key);
+            }
         }
     }
 }
