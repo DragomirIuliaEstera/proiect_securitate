@@ -29,26 +29,39 @@ namespace proiect_securitate
 
             byte[] ascii = Encoding.ASCII.GetBytes(message);
             List<int> buffer = new List<int>();
+
             for (int i = 0; i < ascii.Length; ++i)
             {
-                if (char.IsUpper((char)ascii[i]))
+                int x = Convert.ToInt32(ascii[i]);
+                if (char.IsLetter((char)ascii[i]))
                 {
-                    int x = Convert.ToInt32(ascii[i]);
-                    buffer.Add((x - 65 + requiredShift) % 26);
+                    if (char.IsUpper((char)ascii[i]))
+                    {
+                        buffer.Add((x - 65 + requiredShift) % 26);
+                    }
+                    else
+                    {
+                        buffer.Add((x - 97 + requiredShift) % 26);
+                    }
                 }
-                else
-                {
-                    int x = Convert.ToInt32(ascii[i]);
-                    buffer.Add((x - 97 + requiredShift) % 26);
+                else{
+                    buffer.Add(x);
                 }
             }
             string encryptedMessage = "";
             for (int i = 0; i < ascii.Length; ++i)
             {
-                if (char.IsUpper((char)ascii[i]))
-                    encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 65);
+                if (char.IsLetter((char)ascii[i]))
+                {
+                    if (char.IsUpper((char)ascii[i]))
+                        encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 65);
+                    else
+                        encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 97);
+                }
                 else
-                    encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 97);
+                {
+                    encryptedMessage += Char.ConvertFromUtf32(buffer[i]);
+                }
             }
 
             return encryptedMessage;
