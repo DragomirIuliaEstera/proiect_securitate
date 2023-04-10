@@ -1,6 +1,4 @@
-﻿using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -154,7 +152,7 @@ namespace proiect_securitate
                     bool isUpper = char.IsUpper(c);
                     char lower_letter = char.ToLower(c);
                     int key_shift = ((int)key[index]) - 97;
-                    int decrypted_letter = (int)lower_letter + key_shift;
+                    int decrypted_letter = (int)lower_letter - key_shift;
 
                     if (decrypted_letter > 122)
                     {
@@ -168,7 +166,7 @@ namespace proiect_securitate
 
                     decrypted_text += ((char)decrypted_letter).ToString();
 
-                    index = (index + 1) % key_length;
+                    index = (index - 1 + key_length) % key_length;
                 }
                 else
                 {
