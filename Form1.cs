@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace proiect_securitate
-{
+{ 
     public partial class Form1 : Form
     {
 
@@ -150,14 +150,24 @@ namespace proiect_securitate
                 if (char.IsLetter(c))
                 {
                     bool isUpper = char.IsUpper(c);
-                    char lower_letter = char.ToLower(c);
-                    int key_shift = ((int)key[index]) - 97;
-                    int decrypted_letter = (int)lower_letter - key_shift;
-
-                    if (decrypted_letter > 122)
+                    char lower_letter;
+                    if (isUpper)
+                        lower_letter = char.ToLower(c);
+                    else
                     {
-                        decrypted_letter -= 26;
+                        lower_letter = c;
                     }
+                    int lower_letter_alpha = (int)lower_letter - 97;
+                    int key_shift;
+                    if ((int)key[index]>=65 && (int)key[index] <= 90)
+                        key_shift = ((int)key[index]) - 65;
+                    else
+                        key_shift = ((int)key[index]) - 97;
+                    int decrypted_letter;
+                    if ((decrypted_letter = (lower_letter_alpha - key_shift)) < 0)
+                        decrypted_letter += 26;
+
+                    decrypted_letter += 97;
 
                     if (isUpper)
                     {
@@ -166,7 +176,7 @@ namespace proiect_securitate
 
                     decrypted_text += ((char)decrypted_letter).ToString();
 
-                    index = (index - 1 + key_length) % key_length;
+                    index = (index + 1 ) % key_length;
                 }
                 else
                 {
@@ -198,7 +208,7 @@ namespace proiect_securitate
                 {
                     string input = text_to_decrypt.Text.ToString();
                     string key = text_box_key.Text.ToString().ToLower();
-                    textDecriptat.Text = Vigenere_encryption(input, key);
+                    textDecriptat.Text = Vigenere_decryption(input, key);
                 }
             }
             else if(clientFlag == true)
