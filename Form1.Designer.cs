@@ -186,7 +186,7 @@
             this.textCriptat.Location = new System.Drawing.Point(120, 211);
             this.textCriptat.Margin = new System.Windows.Forms.Padding(4);
             this.textCriptat.Name = "textCriptat";
-            this.textCriptat.Size = new System.Drawing.Size(132, 22);
+            this.textCriptat.Size = new System.Drawing.Size(253, 22);
             this.textCriptat.TabIndex = 15;
             // 
             // textDecriptat
@@ -194,7 +194,7 @@
             this.textDecriptat.Location = new System.Drawing.Point(120, 242);
             this.textDecriptat.Margin = new System.Windows.Forms.Padding(4);
             this.textDecriptat.Name = "textDecriptat";
-            this.textDecriptat.Size = new System.Drawing.Size(132, 22);
+            this.textDecriptat.Size = new System.Drawing.Size(253, 22);
             this.textDecriptat.TabIndex = 16;
             // 
             // label1b

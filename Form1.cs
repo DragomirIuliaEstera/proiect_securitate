@@ -157,21 +157,25 @@ namespace proiect_securitate
                     {
                         lower_letter = c;
                     }
-                    int lower_letter_alpha = (int)lower_letter - 97;
+                    int lower_letter_alpha = (int)lower_letter - (int)'a';
                     int key_shift;
-                    if ((int)key[index]>=65 && (int)key[index] <= 90)
-                        key_shift = ((int)key[index]) - 65;
+                    if(!Char.IsLetter(key[index]))
+                    {
+                        return "Cheia trebuie sa contina doar litere.";
+                    }
+                    if ((int)key[index]>= (int)'A' && (int)key[index] <= (int)'Z')
+                        key_shift = ((int)key[index]) - (int)'A';
                     else
-                        key_shift = ((int)key[index]) - 97;
+                        key_shift = ((int)key[index]) - (int)'a';
                     int decrypted_letter;
                     if ((decrypted_letter = (lower_letter_alpha - key_shift)) < 0)
                         decrypted_letter += 26;
 
-                    decrypted_letter += 97;
+                    decrypted_letter += (int)'a';
 
                     if (isUpper)
                     {
-                        decrypted_letter -= 32;
+                        decrypted_letter -= (int)'a' - (int)'A';
                     }
 
                     decrypted_text += ((char)decrypted_letter).ToString();
