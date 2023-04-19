@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace proiect_securitate
-{ 
+{
     public partial class Form1 : Form
     {
 
@@ -72,7 +72,7 @@ namespace proiect_securitate
         public string Cezar_decrypt(string crypetd_text,int shift_key)
         {
             string decrypted_text = string.Empty;
-            
+
             foreach(char c in crypetd_text)
             {
                 if (char.IsLetter(c))
