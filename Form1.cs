@@ -24,10 +24,9 @@ namespace proiect_securitate
             load_form();
         }
 
-        public string Cezar_encrypt(string plaintext, int shift_key)
+        public string Cezar_encrypt(string plaintext)
         {
             string message = plaintext;
-            int requiredShift = shift_key;
 
             byte[] ascii = Encoding.ASCII.GetBytes(message);
             List<int> buffer = new List<int>();
@@ -39,14 +38,15 @@ namespace proiect_securitate
                 {
                     if (char.IsUpper((char)ascii[i]))
                     {
-                        buffer.Add((x - 65 + requiredShift) % 26);
+                        buffer.Add((x - 65 + 3) % 26);
                     }
                     else
                     {
-                        buffer.Add((x - 97 + requiredShift) % 26);
+                        buffer.Add((x - 97 + 3) % 26);
                     }
                 }
-                else{
+                else
+                {
                     buffer.Add(x);
                 }
             }
@@ -69,37 +69,115 @@ namespace proiect_securitate
             return encryptedMessage;
         }
 
-        public string Cezar_decrypt(string crypetd_text,int shift_key)
+        public string Cezar_decrypt(string crypetd_text)
         {
             string decrypted_text = string.Empty;
-            
-            foreach(char c in crypetd_text)
+
+            foreach (char c in crypetd_text)
             {
                 if (char.IsLetter(c))
                 {
                     bool isUpper = char.IsUpper(c);
                     char letter;
                     letter = char.ToLower(c);
-                    char shifted_letter = (char)(((letter - shift_key - 'a' + 26) % 26) + 'a');
-                    
+                    char shifted_letter = (char)(((letter - 3 - 'a' + 26) % 26) + 'a');
+
                     if (isUpper)
                     {
                         shifted_letter = char.ToUpper(shifted_letter);
                         decrypted_text += shifted_letter;
                     }
                     else
-                    { 
+                    {
                         decrypted_text += shifted_letter;
                     }
                 }
                 else
                 {
-                    decrypted_text+= c;
+                    decrypted_text += c;
                 }
             }
 
             return decrypted_text;
-        } 
+        }
+
+        public string Shift_encrypt(string plaintext, int shift_key)
+        {
+            string message = plaintext;
+            int requiredShift = shift_key;
+
+            byte[] ascii = Encoding.ASCII.GetBytes(message);
+            List<int> buffer = new List<int>();
+
+            for (int i = 0; i < ascii.Length; ++i)
+            {
+                int x = Convert.ToInt32(ascii[i]);
+                if (char.IsLetter((char)ascii[i]))
+                {
+                    if (char.IsUpper((char)ascii[i]))
+                    {
+                        buffer.Add((x - 65 + requiredShift) % 26);
+                    }
+                    else
+                    {
+                        buffer.Add((x - 97 + requiredShift) % 26);
+                    }
+                }
+                else
+                {
+                    buffer.Add(x);
+                }
+            }
+            string encryptedMessage = "";
+            for (int i = 0; i < ascii.Length; ++i)
+            {
+                if (char.IsLetter((char)ascii[i]))
+                {
+                    if (char.IsUpper((char)ascii[i]))
+                        encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 65);
+                    else
+                        encryptedMessage += Char.ConvertFromUtf32(buffer[i] + 97);
+                }
+                else
+                {
+                    encryptedMessage += Char.ConvertFromUtf32(buffer[i]);
+                }
+            }
+
+            return encryptedMessage;
+        }
+
+        public string Shift_decrypt(string crypetd_text, int shift_key)
+        {
+            string decrypted_text = null;
+
+            foreach (char c in crypetd_text)
+            {
+                if (char.IsLetter(c))
+                {
+                    bool isUpper = char.IsUpper(c);
+                    char letter;
+                    letter = char.ToLower(c);
+                    char shifted_letter = (char)(((letter - 'a' - shift_key  + 26) % 26 ) + 'a');
+
+                    if (isUpper)
+                    {
+                        shifted_letter = char.ToUpper(shifted_letter);
+                        decrypted_text += shifted_letter;
+                    }
+                    else
+                    {
+                        decrypted_text += shifted_letter;
+                    }
+                }
+                else
+                {
+                    decrypted_text += c;
+                }
+            }
+
+            return decrypted_text;
+        }
 
         public string Vigenere_encryption(string plain_text,string key)
         {
@@ -197,15 +275,15 @@ namespace proiect_securitate
             {
                 label6.Visible = true;
                 textDecriptat.Visible = true;
-                if (combo_box_cipher_chosen.Text.Equals("Cezar") && text_box_key.Text.ToString() != "" && text_to_decrypt.Text.ToString() != "")
+                if (combo_box_cipher_chosen.Text.Equals("Caesar") && text_to_decrypt.Text.ToString() != "")
                 {
-                    try
-                    {
-                        int shift_key = Int32.Parse(text_box_key.Text.ToString());
+                    //try
+                    //{
+                    //    int shift_key = Int32.Parse(text_box_key.Text.ToString());
                         string input = text_to_decrypt.Text.ToString();
-                        textDecriptat.Text = Cezar_decrypt(input, shift_key);
-                    }
-                    catch (Exception ex) { textDecriptat.Text = "Cheia trebuie sa fie un numar"; }
+                        textDecriptat.Text = Cezar_decrypt(input);
+                    //}
+                    //catch (Exception ex) { textDecriptat.Text = "Cheia trebuie sa fie un numar"; }
                 }
                 else
                 if (combo_box_cipher_chosen.Text.Equals("Vigenere") && text_box_key.Text.ToString() != "" && text_to_decrypt.Text.ToString() != "")
@@ -214,20 +292,27 @@ namespace proiect_securitate
                     string key = text_box_key.Text.ToString().ToLower();
                     textDecriptat.Text = Vigenere_decryption(input, key);
                 }
+                else
+                if (combo_box_cipher_chosen.Text.Equals("Shift") && text_box_key.Text.ToString() != "" && text_to_decrypt.Text.ToString() != "")
+                {
+                    string input = text_to_decrypt.Text.ToString();
+                    int key = Int32.Parse(text_box_key.Text.ToString());
+                    textDecriptat.Text = Shift_decrypt(input, key);
+                }
             }
             else if(clientFlag == true)
             {
                 label3.Visible = true;
                 textCriptat.Visible = true;
-                if (combo_box_cipher_chosen.Text.Equals("Cezar") && text_box_key.Text.ToString() != "" && text_to_encrypt.Text.ToString() != "")
+                if (combo_box_cipher_chosen.Text.Equals("Caesar") && text_to_encrypt.Text.ToString() != "")
                 {
-                    try
-                    {
-                        int shift_key = Int32.Parse(text_box_key.Text.ToString());
+                    //try
+                    //{
+                       // int shift_key = Int32.Parse(text_box_key.Text.ToString());
                         string input = text_to_encrypt.Text.ToString();
-                        textCriptat.Text = Cezar_encrypt(input, shift_key);
-                    }
-                    catch (Exception ex) { textCriptat.Text = "Cheia trebuie sa fie un numar"; }
+                        textCriptat.Text = Cezar_encrypt(input);
+                    //}
+                    //catch (Exception ex) { textCriptat.Text = "Cheia trebuie sa fie un numar"; }
                 }
                 else
                 if (combo_box_cipher_chosen.Text.Equals("Vigenere") && text_box_key.Text.ToString() != "" && text_to_encrypt.Text.ToString() != "")
@@ -235,6 +320,13 @@ namespace proiect_securitate
                     string input = text_to_encrypt.Text.ToString();
                     string key = text_box_key.Text.ToString().ToLower();
                     textCriptat.Text = Vigenere_encryption(input, key);
+                }
+                else
+                if (combo_box_cipher_chosen.Text.Equals("Shift") && text_box_key.Text.ToString() != "" && text_to_decrypt.Text.ToString() != "")
+                {
+                    string input = text_to_decrypt.Text.ToString();
+                    int key = Int32.Parse(text_box_key.Text.ToString());
+                    textDecriptat.Text = Shift_encrypt(input, key);
                 }
             }
         }
