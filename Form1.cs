@@ -236,13 +236,6 @@ namespace proiect_securitate
                     string key = text_box_key.Text.ToString().ToLower();
                     textCriptat.Text = Vigenere_encryption(input, key);
                 }
-                else
-                if (combo_box_cipher_chosen.Text.Equals("Shift") && text_box_key.Text.ToString() != "" && text_to_encrypt.Text.ToString() != "")
-                {
-                    string input = text_to_encrypt.Text.ToString();
-                    int key = Int32.Parse(text_box_key.Text.ToString());
-                    textCriptat.Text = Shift_encrypt(input, key);
-                }
             }
         }
 
